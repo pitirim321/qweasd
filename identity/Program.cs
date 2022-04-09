@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<SampleContext>();
@@ -25,6 +26,17 @@ app.UseSwaggerUI();
 
 app.MapPost("/registerC", ([FromServices] SampleContext context, RegisterCustomer body) =>
 {
+    try
+    {
+        var login = context.Users.First(u => u.Login == body.Login);
+        if (login != null) return "Логин занят";
+    }
+    catch (Exception e)
+    {
+        
+    }
+    
+    
     var hash = md5.ComputeHash(Encoding.UTF8.GetBytes(body.Password));
     Customer user = new Customer()
     {
@@ -42,6 +54,16 @@ app.MapPost("/registerC", ([FromServices] SampleContext context, RegisterCustome
 
 app.MapPost("/registerS", ([FromServices] SampleContext context, RegisterSeller body) =>
 {
+    try
+    {
+        var login = context.Users.First(u => u.Login == body.Login);
+        if (login != null) return "Логин занят";
+    }
+    catch (Exception e)
+    {
+        
+    }
+    
     var hash = md5.ComputeHash(Encoding.UTF8.GetBytes(body.Password));
     Seller user = new Seller()
     {
@@ -72,14 +94,11 @@ app.MapPost("/login", ([FromServices] SampleContext context, LoginBody body) =>
    
 });
 
-app.MapPost("/goods", ([FromServices] SampleContext context, CreateGood body) =>
+app.MapPost("/goods", async ([FromServices] SampleContext context, CreateGood body) =>
 {
-    var user = context.Sellers.First(u => u.Id == body.Id);
-    if (user == null) return "Пользователь не найден";
-    if (user is Customer) return "Пользователь - клиент";
-    var seller = user;
-    seller.goods.Add(new Goods(body.Id ,body.Name, body.Price));
-    context.SaveChanges();
+    var seller = await context.Sellers.FirstAsync(u => u.Id == body.Id);
+    seller.goods.Add(new Goods(Guid.NewGuid() , body.Name, body.Price));
+    await context.SaveChangesAsync();
     return "Ок";
 });
 
@@ -107,6 +126,18 @@ app.MapPost("/newOrder", ([FromServices] SampleContext context, NewOrder body) =
     });
     context.SaveChanges();
     return "Ок";
+});
+
+app.MapPost("/DeleteUsers", ([FromServices] SampleContext context, DeleteUser body) =>
+{
+    foreach (var VARIABLE in context.Users)
+    {
+        var user = context.Users.FirstOrDefault(o => o.Login == body.login);
+
+        context.Users.Remove(user);
+        context.SaveChanges(); 
+    }
+      
 });
 
 app.MapGet("/users", ([FromServices] SampleContext context) =>
@@ -169,9 +200,29 @@ public class Seller : User {
     public string Info { get; set; }
     public string AddressGive { get; set; }
     public List<Goods> goods { get; set; } = new List<Goods>();
+
 }
 
-public record Goods(Guid Id ,string Name, double Price);
+public class Goods
+{
+    public Goods(Guid Id ,string Name, double Price)
+    {
+        this.Id = Id;
+        this.Name = Name;
+        this.Price = Price;
+    }
+
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public double Price { get; set; }
+
+    public void Deconstruct(out Guid Id , out string Name, out double Price)
+    {
+        Id = this.Id;
+        Name = this.Name;
+        Price = this.Price;
+    }
+}
 
 class CreateGood
 {
@@ -233,8 +284,13 @@ public class Order
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;");
+            optionsBuilder.UseSqlite("Filename=Mobile.db");
         }
 
      
     }
+
+class DeleteUser
+{
+    public string login { get; set; }
+}

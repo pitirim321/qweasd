@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User2\\Desktop\\qwe-master\\qwe-master\\identity\\identity.csproj": {}
+    "C:\\Users\\User10\\Desktop\\qwe\\WebApplication5\\identity\\identity.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User2\\Desktop\\qwe-master\\qwe-master\\identity\\identity.csproj": {
+    "C:\\Users\\User10\\Desktop\\qwe\\WebApplication5\\identity\\identity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User2\\Desktop\\qwe-master\\qwe-master\\identity\\identity.csproj",
+        "projectUniqueName": "C:\\Users\\User10\\Desktop\\qwe\\WebApplication5\\identity\\identity.csproj",
         "projectName": "identity",
-        "projectPath": "C:\\Users\\User2\\Desktop\\qwe-master\\qwe-master\\identity\\identity.csproj",
-        "packagesPath": "C:\\Users\\User2\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User2\\Desktop\\qwe-master\\qwe-master\\identity\\obj\\",
+        "projectPath": "C:\\Users\\User10\\Desktop\\qwe\\WebApplication5\\identity\\identity.csproj",
+        "packagesPath": "C:\\Users\\User10\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User10\\Desktop\\qwe\\WebApplication5\\identity\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\Offline Packages",
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet"
         ],
         "configFilePaths": [
-          "C:\\Users\\User2\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 21.1.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -27,6 +29,7 @@
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\DevExpress 21.1\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -54,6 +57,14 @@
               "target": "Package",
               "version": "[7.0.0-preview.2.22153.1, )"
             },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[7.0.0-preview.2.22153.1, )"
+            },
+            "SQLite": {
+              "target": "Package",
+              "version": "[3.13.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.3.0, )"
@@ -77,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     }
